@@ -30,7 +30,7 @@ class Node:
 class DoubleLinkedNode(Node):
     def __init__(self, value=None, next_=None, prev=None):
         super().__init__(value=value, next_=next_)
-        self._prev = prev
+        self.prev = prev
 
     def __repr__(self) -> str:
         prev = None if self.prev is None else f"DoubleLinkedNode({self.prev})"

@@ -14,7 +14,7 @@ class Node:
         return f"Node({self.value}, {self.next})"
 
     def is_valid(self, node: Any) -> None:
-        if not isinstance(node, (type(None), Node)):
+        if not isinstance(node, (type(None), Node or DoubleLinkedNode)):
             raise TypeError("Value of inappropriate type")
 
     @property
@@ -28,18 +28,15 @@ class Node:
 
 
 class DoubleLinkedNode(Node):
+
     def __init__(self, value=None, next_=None, prev=None):
         super().__init__(value=value, next_=next_)
-        self._prev = prev
+        self.prev = prev
 
     def __repr__(self) -> str:
         prev = None if self.prev is None else f"DoubleLinkedNode({self.prev})"
         next_ = None if self.next is None else f"DoubleLinkedNode({self.next})"
         return f"DoubleLinkedNode({self.value}), {next_}, {prev}"
-
-    def is_valid(self, node: Any) -> None:
-        if not isinstance(node, (type(None), DoubleLinkedNode)):
-            raise TypeError("Value of inappropriate type")
 
     @property
     def prev(self):
