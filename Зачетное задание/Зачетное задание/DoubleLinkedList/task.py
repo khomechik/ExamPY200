@@ -5,7 +5,7 @@ from node import Node, DoubleLinkedNode
 
 
 class LinkedList(MutableSequence):
-    NodeName = Node
+    NodeClass = Node
 
     def __init__(self, data: Iterable = None):
         self.len = 0
@@ -18,7 +18,7 @@ class LinkedList(MutableSequence):
 
     def append(self, value: Any):
         """ Добавление элемента в конец связного списка. """
-        append_node = self.NodeName(value)
+        append_node = self.NodeClass(value)
 
         if self.head is None:
             self.head = self.tail = append_node
@@ -28,14 +28,16 @@ class LinkedList(MutableSequence):
 
         self.len += 1
 
-    def step_by_step_on_nodes(self, index: int) -> Node:
-        """ Функция выполняет перемещение по узлам до указанного индекса. И возвращает узел. """
+    def validate_index(self, index: int):
         if not isinstance(index, int):
             raise TypeError()
 
         if not 0 <= index < self.len:
             raise IndexError()
 
+    def step_by_step_on_nodes(self, index: int) -> Node:
+        """ Функция выполняет перемещение по узлам до указанного индекса. И возвращает узел. """
+        self.validate_index(index)
         current_node = self.head
         for _ in range(index):
             current_node = current_node.next
@@ -52,7 +54,6 @@ class LinkedList(MutableSequence):
 
     def __getitem__(self, index: int) -> Any:
         """ Метод возвращает значение узла по указанному индексу. """
-        print("Вызван метод \"__getitem__\"")
         node = self.step_by_step_on_nodes(index)
         return node.value
 
@@ -63,17 +64,13 @@ class LinkedList(MutableSequence):
 
     def __delitem__(self, index: int):
         """ Метод удаляет значение узла по указанному индексу. """
-        if not isinstance(index, int):
-            raise TypeError()
-
-        if not 0 <= index < self.len:  # для for
-            raise IndexError()
-
+        self.validate_index(index)
         if index == 0:
             self.head = self.head.next
         elif index == self.len - 1:
             tail = self.step_by_step_on_nodes(index - 1)
             tail.next = None
+            self.tail = tail
         else:
             prev_node = self.step_by_step_on_nodes(index - 1)
             del_node = prev_node.next
@@ -96,16 +93,19 @@ class LinkedList(MutableSequence):
         """ Метод добавляет новый узел по указанному индексу. """
         if not isinstance(index, int):
             raise TypeError
+        insert_node = self.NodeClass(value)
         if index < 0:
             raise IndexError
+        if index == 0:
+            insert_node.next = self.head
+            self.head = insert_node
         if index >= self.len:
             self.append(value)
         elif 0 < index < self.len:
-            insert_node = self.NodeName(value)
             current_node = self.step_by_step_on_nodes(index - 1)
             self.linked_nodes(insert_node, current_node.next)
             self.linked_nodes(current_node, insert_node)
-            self.len += 1
+        self.len += 1
 
     def nodes_iterator(self) -> Iterator[Node]:
         """ Функция-генератор для прохода по всем узлам. """
@@ -128,7 +128,7 @@ class LinkedList(MutableSequence):
 
 
 class DoubleLinkedList(LinkedList):
-    NodeName = DoubleLinkedNode
+    NodeClass = DoubleLinkedNode
 
     def __init__(self, data: Iterable = None):
         super().__init__(data=data)
@@ -142,3 +142,8 @@ class DoubleLinkedList(LinkedList):
 
 if __name__ == "__main__":
     ...
+a = [4, 3, 8, 1, 7]
+ll = LinkedList(a)
+print(ll)
+b = Node(4)
+

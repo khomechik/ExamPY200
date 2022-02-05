@@ -3,20 +3,6 @@ files:
 - name: __init__.py
   visible: false
   learner_created: false
-- name: task.py
-  visible: true
-  text: |
-    class LinkedList:
-        ...
-
-
-    class DoubleLinkedList(LinkedList):
-        ...
-
-
-    if __name__ == "__main__":
-        ...
-  learner_created: false
 - name: tests/__init__.py
   visible: false
   learner_created: false
@@ -35,6 +21,20 @@ files:
   visible: true
   text: |
     ...
+  learner_created: false
+- name: task.py
+  visible: true
+  text: |
+    class LinkedList:
+        ...
+
+
+    class DoubleLinkedList(LinkedList):
+        ...
+
+
+    if __name__ == "__main__":
+        ...
   learner_created: false
 status: Unchecked
 record: -1
