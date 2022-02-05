@@ -52,7 +52,6 @@ class LinkedList(MutableSequence):
 
     def __getitem__(self, index: int) -> Any:
         """ Метод возвращает значение узла по указанному индексу. """
-        print("Вызван метод \"__getitem__\"")
         node = self.step_by_step_on_nodes(index)
         return node.value
 
