@@ -23,8 +23,8 @@ class Node:
 
     @prop_next.setter
     def prop_next(self, next_: Optional["Node"]):
-        if self.is_valid(next_):
-            self._next = next_
+        self.is_valid(next_)
+        self._next = next_
 
 
 class DoubleLinkedNode(Node):
@@ -47,5 +47,5 @@ class DoubleLinkedNode(Node):
 
     @prev.setter
     def prev(self, prev):
-        if self.is_valid(prev):
-            self._prev = prev
+        self.is_valid(prev)
+        self._prev = prev

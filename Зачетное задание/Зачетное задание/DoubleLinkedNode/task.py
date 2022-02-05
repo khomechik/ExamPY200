@@ -2,6 +2,7 @@ from typing import Any, Optional
 
 
 class Node:
+    NodeClass = Node
 
     def __init__(self, value: Any, next_: Optional["Node"] = None):
         self.value = value
@@ -14,7 +15,7 @@ class Node:
         return f"Node({self.value}, {self.next})"
 
     def is_valid(self, node: Any) -> None:
-        if not isinstance(node, (type(None), Node or DoubleLinkedNode)):
+        if not isinstance(node, (type(None), self.NodeClass)):
             raise TypeError("Value of inappropriate type")
 
     @property
@@ -23,11 +24,12 @@ class Node:
 
     @prop_next.setter
     def prop_next(self, next_: Optional["Node"]):
-        if self.is_valid(next_):
-            self._next = next_
+        self.is_valid(next_)
+        self._next = next_
 
 
 class DoubleLinkedNode(Node):
+    NodeClass = DoubleLinkedNode
 
     def __init__(self, value=None, next_=None, prev=None):
         super().__init__(value=value, next_=next_)
@@ -44,8 +46,8 @@ class DoubleLinkedNode(Node):
 
     @prev.setter
     def prev(self, prev):
-        if self.is_valid(prev):
-            self._prev = prev
+        self.is_valid(prev)
+        self._prev = prev
 
 
 if __name__ == "__main__":

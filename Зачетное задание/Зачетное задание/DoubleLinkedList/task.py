@@ -28,7 +28,7 @@ class LinkedList(MutableSequence):
 
         self.len += 1
 
-    def index_conditions(self, index: int):
+    def validate_index(self, index: int):
         if not isinstance(index, int):
             raise TypeError()
 
@@ -37,7 +37,7 @@ class LinkedList(MutableSequence):
 
     def step_by_step_on_nodes(self, index: int) -> Node:
         """ Функция выполняет перемещение по узлам до указанного индекса. И возвращает узел. """
-        self.index_conditions(index)
+        self.validate_index(index)
         current_node = self.head
         for _ in range(index):
             current_node = current_node.next
@@ -64,7 +64,7 @@ class LinkedList(MutableSequence):
 
     def __delitem__(self, index: int):
         """ Метод удаляет значение узла по указанному индексу. """
-        self.index_conditions(index)
+        self.validate_index(index)
         if index == 0:
             self.head = self.head.next
         elif index == self.len - 1:
@@ -146,5 +146,4 @@ a = [4, 3, 8, 1, 7]
 ll = LinkedList(a)
 print(ll)
 b = Node(4)
-print(ll.__contains__(b))
 
